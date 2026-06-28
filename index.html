@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My College Buddy | Student Resource Hub</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- Premium Ambient Background Blobs -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <!-- Header / Navigation Bar -->
+    <header class="navbar glass">
+        <div class="nav-container">
+            <a href="#home" class="logo" onclick="navigateTo('home')">MyCollege<span>Buddy</span></a>
+            
+            <!-- Mobile Hamburger Button -->
+            <button class="hamburger" id="hamburger-btn" aria-label="Toggle Navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link active" onclick="navigateTo('home')">Notices</a>
+                <a href="#resources" class="nav-link" onclick="navigateTo('resources')">Resource Vault</a>
+                <a href="#groups" class="nav-link" onclick="navigateTo('groups')">WhatsApp Channels</a>
+                <a href="#calculator" class="nav-link" onclick="navigateTo('calculator')">📊 Tool Hub</a>
+                <a href="#events" class="nav-link" onclick="navigateTo('events')">🎉 Campus Life</a>
+                <a href="#donations" class="nav-link" onclick="navigateTo('donations')">Support Us</a>
+                <a href="#team" class="nav-link" onclick="navigateTo('team')">Our Team</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN VIEWS CONTAINER -->
+    <main class="main-content">
+
+        <!-- VIEW: WHATSAPP COMMUNITY HUB -->
+        <section id="view-groups" class="view-section">
+            <div class="hero-section">
+                <h1>Department Chat Rooms</h1>
+                <p>Connect with your exact class batch. Verification is required before link access is unlocked.</p>
+            </div>
+
+            <div class="content-wrapper">
+                <!-- STEP 1: VERIFICATION & FILTER GATEWAY -->
+                <div class="glass filter-grid" style="grid-template-columns: 1fr; gap: 20px; padding: 24px; margin-bottom: 30px;">
+                    <h3 style="font-size: 1.2rem; color: var(--accent-cyan); display: flex; align-items: center; gap: 8px;">
+                        🔒 Secure Student Access Verification
+                    </h3>
+                    
+                    <div class="filter-group">
+                        <label for="directory-stream-filter">Select Your Official Department / Stream</label>
+                        <select id="directory-stream-filter" onchange="handleVerificationChange()">
+                            <option value="" disabled selected>-- Choose your department --</option>
+                            <option value="bsc_cs">B.Sc. (Computer Science)</option>
+                            <option value="bsc_pcm">B.Sc. (Physics, Chemistry, Maths)</option>
+                            <option value="bsc_biotech">B.Sc. (Biotechnology)</option>
+                            <option value="bsc_ind_chem">B.Sc. (Industrial Chemistry)</option>
+                            <option value="bca">BCA (Bachelor of Computer Applications)</option>
+                            <option value="msc_all">M.Sc. (Postgraduate Branches)</option>
+                        </select>
+                    </div>
+
+                    <!-- Anti-Spam Checkbox Gate -->
+                    <div style="display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                        <input type="checkbox" id="student-verify-checkbox" onchange="handleVerificationChange()" style="width: 18px; height: 18px; margin-top: 2px; cursor: pointer;">
+                        <label for="student-verify-checkbox" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.4; cursor: pointer;">
+                            I officially confirm that I am a student of Govt. Adarsh Science College, Gwalior belonging to this specific department, and I promise not to join rooms of other branches.
+                        </label>
+                    </div>
+                </div>
+
+                <!-- STEP 2: DYNAMIC LOCKED/UNLOCKED GROUPS DISPLAY -->
+                <div id="directory-status-message">
+                    <!-- Handled by JavaScript to show instructions or unlock messages -->
+                </div>
+
+                <div id="directory-groups-grid" class="cards-grid">
+                    <!-- Verified matching group cards appear right here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 1: HOME & NOTICE BOARD -->
+        <section id="view-home" class="view-section active">
+            <div class="hero-section">
+                <h1>Adarsh Science College Portal</h1>
+                <p>An unofficial platform built by students, for students. Immediate access to updates, notes, and study papers.</p>
+            </div>
+
+            <div class="content-wrapper">
+                <h2 class="section-title">Active Notice Board</h2>
+                <div class="search-box glass">
+                    <input type="text" id="notice-search" placeholder="Search notices (e.g., CCE, Exam, Physics)..." oninput="filterNotices()">
+                </div>
+                <div id="notice-container" class="timeline-container">
+                    <!-- JavaScript injects notices here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: RESOURCE VAULT -->
+        <section id="view-resources" class="view-section">
+            <div class="hero-section">
+                <h1>The Resource Vault</h1>
+                <p>Find PYQs, handwritten notes, and academic reference materials instantly.</p>
+            </div>
+            <div class="content-wrapper">
+                <!-- Dropdown Filter Grid -->
+                <div class="filter-grid glass">
+                    <div class="filter-group">
+                        <label for="filter-stream">Stream / Combination</label>
+                        <select id="filter-stream" onchange="filterResources()">
+                            <option value="all">All Streams</option>
+                            <option value="bsc_pcm">B.Sc. (PCM)</option>
+                            <option value="bsc_cs">B.Sc. (Computer Science)</option>
+                            <option value="bsc_biotech">B.Sc. (Biotechnology)</option>
+                            <option value="bsc_ind_chem">B.Sc. (Industrial Chemistry)</option>
+                            <option value="bca">BCA</option>
+                            <option value="msc_all">M.Sc. (All Branches)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-sem">Semester</label>
+                        <select id="filter-sem" onchange="filterResources()">
+                            <option value="all">All Semesters</option>
+                            <option value="sem_1">Semester 1</option>
+                            <option value="sem_2">Semester 2</option>
+                            <option value="sem_3">Semester 3</option>
+                            <option value="sem_4">Semester 4</option>
+                            <option value="sem_5">Semester 5</option>
+                            <option value="sem_6">Semester 6</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-type">Resource Type</label>
+                        <select id="filter-type" onchange="filterResources()">
+                            <option value="all">All Types</option>
+                            <option value="pyq">PYQ (Exam Paper)</option>
+                            <option value="notes">Handwritten Notes</option>
+                            <option value="book">Reference Book</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Live Resource Cards Target Grid -->
+                <div id="resources-grid" class="cards-grid">
+                    <!-- JavaScript injects structural resource cards here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: DONATIONS -->
+        <section id="view-donations" class="view-section">
+            <div class="content-wrapper medium-width">
+                <div class="glass donation-card text-center">
+                    <div class="badge-icon">🌐</div>
+                    <h1>Keep Server & Domain Running</h1>
+                    <p>This app is completely free and completely ad-free. We fund our domain extensions (`.in`/`.com`) out of pocket. If this helped save you a trip to the college yard or copy shop, pitch in a few rupees!</p>
+                    
+                    <div class="donation-divider"></div>
+                    
+                    <h3>Scan UPI QR Code</h3>
+                    <div class="qr-placeholder">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=yourvpa@upi&pn=MyCollegeBuddy" alt="UPI QR Code">
+                    </div>
+                    
+                    <a href="upi://pay?pa=yourvpa@upi&pn=MyCollegeBuddy&cu=INR" class="btn btn-accent btn-wide">
+                        Pay Directly via UPI App
+                    </a>
+                    <p class="muted-text text-sm">Works perfectly on mobile devices with GPay, PhonePe, or Paytm</p>
+                </div>
+            </div>
+<!-- ==========================================================================
+   ENHANCED DONATION & STUDENT SUPPORT HUB
+   ========================================================================== -->
+<div class="donation-container" style="max-width: 1000px; margin: 40px auto; padding: 20px;">
+    
+    <div style="text-align: center; margin-bottom: 36px;">
+        <span style="background: rgba(38, 165, 228, 0.1); color: #26A5E4; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; uppercase; letter-spacing: 0.5px;">Support Our Mission</span>
+        <h2 style="margin: 12px 0 8px 0; font-size: 2rem;">Fuel Equal-Access Education</h2>
+        <p class="muted-text" style="max-width: 600px; margin: 0 auto; font-size: 0.95rem; line-height: 1.5;">
+            We keep our core academic guides, notes, and calculation pipelines 100% free forever. Your contributions directly cover server costs, API loads, and expand peer-to-peer resource accessibility.
+        </p>
+    </div>
+
+    <!-- TIER MATRIXED CARD GRID -->
+    <div class="donation-tiers-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
+        
+        <!-- TIER 1 -->
+        <div class="glass tier-card" onclick="selectDonationAmount(150, this)" style="padding: 24px; border-radius: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: all 0.25s ease; position: relative;">
+            <h4 style="margin: 0 0 6px 0; color: #94a3b8;">📚 Book Catalyst</h4>
+            <div style="font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; color: #fff;">₹150</div>
+            <p style="font-size: 0.85rem; line-height: 1.4; color: #cbd5e1; margin: 0;">Sponsors high-speed cloud OCR processing for roughly 50 pages of handwritten core exam notes.</p>
+        </div>
+
+        <!-- TIER 2: FEATURED / ANCHORED -->
+        <div class="glass tier-card popular-tier" onclick="selectDonationAmount(500, this)" style="padding: 24px; border-radius: 12px; cursor: pointer; border: 2px solid #26A5E4; transition: all 0.25s ease; position: relative; background: rgba(38,165,228,0.03);">
+            <div style="position: absolute; top: -12px; right: 16px; background: #26A5E4; color: #000; font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: 10px; text-transform: uppercase;">Most Impact</div>
+            <h4 style="margin: 0 0 6px 0; color: #26A5E4;">⚡ Server Sustainizer</h4>
+            <div style="font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; color: #fff;">₹500</div>
+            <p style="font-size: 0.85rem; line-height: 1.4; color: #cbd5e1; margin: 0;">Covers one full month of scalable database hosting, allowing thousands of students to download PYQs seamlessly.</p>
+        </div>
+
+        <!-- TIER 3 -->
+        <div class="glass tier-card" onclick="selectDonationAmount(1200, this)" style="padding: 24px; border-radius: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: all 0.25s ease; position: relative;">
+            <h4 style="margin: 0 0 6px 0; color: #94a3b8;">🎓 Workspace Patron</h4>
+            <div style="font-size: 1.8rem; font-weight: 700; margin-bottom: 12px; color: #fff;">₹1,200</div>
+            <p style="font-size: 0.85rem; line-height: 1.4; color: #cbd5e1; margin: 0;">Funds continuous maintenance upgrades for the interactive AI Tools suite for an entire academic term.</p>
+        </div>
+
+    </div>
+
+    <!-- GATEWAY & CONTROL HUB PANEL -->
+    <div class="glass" style="padding: 30px; border-radius: 16px; border-top: 4px solid #26A5E4;">
+        <div style="display: flex; flex-direction: column; gap: 20px; max-width: 500px; margin: 0 auto;">
+            
+            <div>
+                <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">Custom Contribution Amount (INR)</label>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <span style="position: absolute; left: 16px; font-weight: 600; color: #64748b;">₹</span>
+                    <input type="number" id="donation-amount" value="500" min="10" style="width: 100%; padding: 12px 12px 12px 32px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: #fff; font-size: 1.1rem; font-weight: 600;">
+                </div>
+            </div>
+
+            <button onclick="initiateDonationPipeline()" style="width: 100%; padding: 14px; background: #26A5E4; border: none; border-radius: 8px; color: #000; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform 0.1s ease, background-color 0.2s;">
+                Securely Proceed to Contribution
+            </button>
+            
+            <!-- TRUST SIGNALS FOOTER -->
+            <div style="display: flex; justify-content: center; gap: 16px; font-size: 0.75rem; color: #64748b; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px;">
+                <span>🔒 Secure UPI / Cards Payment</span>
+                <span>🛡️ SSL encrypted processing</span>
+            </div>
+
+            <!-- REGULATORY DISCLAIMER MATRIX ZONE -->
+            <div class="disclaimer-box" style="margin-top: 10px; padding: 12px 16px; background: rgba(255,255,255,0.01); border-radius: 8px; border: 1px solid rgba(255,255,255,0.03);">
+                <p style="font-size: 0.72rem; line-height: 1.4; color: #64748b; margin: 0; text-align: justify;">
+                    <strong>Legal Notice & Contribution Disclaimer:</strong> 
+                    This contribution is strictly voluntary and intended solely to maintain infrastructure, open-access development, and digital hosting provisions of this peer-to-peer workspace. These payments are contributions to an independent student-resource initiative and <strong>do not constitute a charitable, tax-deductible donation under Section 80G</strong> of the Income Tax Act. No physical goods, institutional academic credit, or commercial services are offered or provided in exchange for this transaction. By completing payment, you authorize our processing partner gateway to handle this transaction securely.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+        </section>
+        <!-- VIEW 4: TEAM SECTION -->
+        <section id="view-team" class="view-section">
+            <div class="hero-section">
+                <h1>The Core Team</h1>
+                <p>The student developers and resource managers maintaining this ecosystem.</p>
+            </div>
+            <div class="content-wrapper">
+                <div class="cards-grid">
+                    <!-- Team Member 1 -->
+                    <div class="glass profile-card text-center">
+                        <div class="profile-avatar">
+                            <span class="avatar-fallback">HS</span>
+                        </div>
+                        <h3>Himanshu Singh</h3>
+                        <p class="role-badge">Lead Developer & Architect</p>
+                        <p class="profile-desc">Designing platforms and software infrastructure to solve actual ecosystem problems.</p>
+                    </div>
+                    <!-- Team Member 2 -->
+                    <div class="glass profile-card text-center">
+                        <div class="profile-avatar">
+                            <span class="avatar-fallback">CR</span>
+                        </div>
+                        <h3>Student Core Contributor</h3>
+                        <p class="role-badge">Resource & Drive Curator</p>
+                        <p class="profile-desc">Manages verification metrics, sorts user submissions, and clears down structural assets.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- VIEW 5: ACADEMIC TOOLS & PERFORMANCE SUITE -->
+<section id="view-calculator" class="view-section">
+    <div class="hero-section">
+        <h1>Academic Tool Suite</h1>
+        <p>Project your semester goals, analyze internal practical marks, and convert university grades instantly.</p>
+    </div>
+
+    <div class="content-wrapper" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        
+        <!-- TWO-COLUMN APPLICATION GRID WORKSPACE -->
+        <div class="tools-layout-grid" style="display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 10px;">
+            
+            <!-- LEFT WORKSTATION: TARGET ESTIMATION MATRIX -->
+            <div class="glass" style="padding: 24px; border-top: 4px solid #26A5E4; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">🎯 Written Paper Target Estimator</h3>
+                    <p class="muted-text" style="font-size: 0.85rem; margin-bottom: 24px; line-height: 1.4;">
+                        Dial in your internal portfolio and practical metrics to estimate the precise score needed on your final written university examination paper to secure your aggregate goal.
+                    </p>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div>
+                            <label style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">
+                                <span>CCE / Mid-Term Internals</span>
+                                <span style="color: #26A5E4;"><span id="val-cce">25</span> / 40 M</span>
+                            </label>
+                            <input type="range" id="input-cce" min="0" max="40" value="25" style="width: 100%; accent-color: #26A5E4;" oninput="calculateAcademicTargets()">
+                        </div>
+
+                        <div>
+                            <label style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">
+                                <span>Practical Lab / Viva-Voce Metrics</span>
+                                <span style="color: #26A5E4;"><span id="val-practical">35</span> / 50 M</span>
+                            </label>
+                            <input type="range" id="input-practical" min="0" max="50" value="35" style="width: 100%; accent-color: #26A5E4;" oninput="calculateAcademicTargets()">
+                        </div>
+
+                        <div>
+                            <label style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">
+                                <span>Target Semester Aggregation Milestone</span>
+                                <span style="color: #26A5E4;"><span id="val-target">75</span>%</span>
+                            </label>
+                            <input type="range" id="input-target" min="40" max="100" value="75" style="width: 100%; accent-color: #26A5E4;" oninput="calculateAcademicTargets()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTPUT DISPLAY REPORT TARGET CARD PANEL -->
+                <div id="calculator-report-card" style="padding: 20px; border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); margin-top: 30px;">
+                    <!-- Handled via JS Execution Loop dynamically -->
+                </div>
+            </div>
+
+            <!-- RIGHT WORKSTATION: GRADE INDEX & CONVERTER BOARD -->
+            <div class="glass" style="padding: 24px; border-top: 4px solid #a855f7; display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3 style="margin-bottom: 8px; display: flex; align-items: center; gap: 10px;">📈 SGPA / CGPA Percentage Converter</h3>
+                    <p class="muted-text" style="font-size: 0.85rem; margin-bottom: 24px; line-height: 1.4;">
+                        Convert university choice-based credit system indices into standardized linear percentages instantly matching state institutional matrices.
+                    </p>
+
+                    <div style="display: flex; flex-direction: column; gap: 20px;">
+                        <div>
+                            <label style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">
+                                <span>Cumulative Grade Index (CGPA / SGPA)</span>
+                                <span style="color: #a855f7; font-weight: 700;"><span id="val-cgpa">7.50</span> / 10.0</span>
+                            </label>
+                            <input type="range" id="input-cgpa" min="4.0" max="10.0" step="0.05" value="7.50" style="width: 100%; accent-color: #a855f7;" oninput="executeGradeConversionMatrix()">
+                        </div>
+                    </div>
+
+                    <!-- REFERENCE CLASSIFICATION GRID TABLE -->
+                    <div style="margin-top: 24px; background: rgba(0,0,0,0.15); border-radius: 8px; padding: 12px; border: 1px solid rgba(255,255,255,0.03);">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; tracking: 0.5px;">Standard Reference Board Scale</p>
+                        <div style="display: flex; flex-direction: column; gap: 6px; font-size: 0.8rem;">
+                            <div style="display: flex; justify-content: space-between; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                                <span>9.00 - 10.00</span> <span style="color: #4ade80; font-weight: 600;">Outstanding (First Class Dist.)</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                                <span>7.50 - 8.99</span> <span style="color: #60a5fa; font-weight: 600;">First Class High Division</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.03);">
+                                <span>6.00 - 7.49</span> <span style="color: #f1f5f9;">First Division Entry Line</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Under 5.00</span> <span style="color: #f87171;">Pass Boundary Limit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTPUT DISPLAY REPORT GRADE CONVERSION PANEL -->
+                <div id="grade-report-card" style="padding: 20px; border-radius: 12px; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05); margin-top: 30px;">
+                    <!-- Handled via JS Execution Loop dynamically -->
+                </div>
+            </div>
+
+        </div> <!-- End .tools-layout-grid -->
+
+    </div> <!-- End .content-wrapper -->
+</section>
+<!-- VIEW 6: CAMPUS LIFE & EVENTS CENTER -->
+<section id="view-events" class="view-section">
+    <div class="hero-section" style="background: linear-gradient(135deg, rgba(168,85,247,0.15) 0%, rgba(38,165,228,0.05) 100%);">
+        <h1>Campus Life & Fests</h1>
+        <p>Your pass to upcoming college festivals, department parties, tech hackathons, and cultural nights.</p>
+    </div>
+
+    <div class="content-wrapper" style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <!-- RUNTIME CATEGORY SELECTION BADGES -->
+<div class="filter-container">
+    <button class="filter-chip active" onclick="filterCampusEvents('all', this)">All Events</button>
+    <button class="filter-chip" onclick="filterCampusEvents('fest', this)">Cultural Fests</button>
+    <button class="filter-chip" onclick="filterCampusEvents('party', this)">Parties & Freshers</button>
+    <button class="filter-chip" onclick="filterCampusEvents('academic', this)">Tech & Seminars</button>
+</div>
+
+        <!-- MAIN ACTIVE EVENT DISPLAY GRID -->
+        <div id="events-display-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px;">
+            <!-- Handled dynamically by the script engine below -->
+        </div>
+
+    </div>
+</section>
+    </main>
+
+    <!-- Operational Core JavaScript Links -->
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
